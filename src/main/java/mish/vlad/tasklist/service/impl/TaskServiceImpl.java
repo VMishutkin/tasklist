@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
-    private final UserRepository userRepository;
     private final TaskRepository taskRepository;
 
     @Override
