@@ -1,7 +1,7 @@
 package mish.vlad.tasklist.model.user;
 
 import lombok.Data;
-import org.springframework.scheduling.config.Task;
+import mish.vlad.tasklist.model.task.Task;
 
 import java.util.List;
 import java.util.Set;

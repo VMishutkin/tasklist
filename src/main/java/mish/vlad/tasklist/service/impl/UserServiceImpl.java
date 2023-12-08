@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User getByUsername(String username) {
         return
-                userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Task not found"));;
+                userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Task not found"));
     }
 
     @Override
