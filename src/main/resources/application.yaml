@@ -8,7 +8,14 @@ spring:
     init:
       mode: never
       continue-on-error: false
-      data-locations: classpath:demo_data.sql
+      #data-locations: classpath:demo_data.sql
+  liquibase:
+    changelog: classpath:liquibase/db.changelog.yaml
+    enabled: true
+    default-schema: tasklist
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
 security:
   jwt:
     secret: 0YHQtdC60YDQtdGC0L3Ri9C50LrQvtC00LrQvtGC0L7RgNGL0LnQvdC40LrRgtC+0L3QtdC30L3QsNC10YI=

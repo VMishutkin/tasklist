@@ -38,7 +38,8 @@ public class UserController {
     @GetMapping({"/{id}"})
     public UserDto getById(@PathVariable Long id){
         User user = userService.getById(id);
-        return userMapper.toDto(user);
+        UserDto userDto = userMapper.toDto(user);
+        return userDto;
     }
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){

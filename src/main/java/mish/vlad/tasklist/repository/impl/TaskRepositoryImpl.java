@@ -6,13 +6,12 @@ import mish.vlad.tasklist.model.task.Task;
 import mish.vlad.tasklist.repository.DataSourceConfig;
 import mish.vlad.tasklist.repository.TaskRepository;
 import mish.vlad.tasklist.repository.mappers.TaskRowMapper;
-import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+//@Repository
 @RequiredArgsConstructor
 public class TaskRepositoryImpl implements TaskRepository {
 
@@ -86,7 +85,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void assignToUsesrById(Long taskId, Long userId) {
         try {
             Connection connection = dataSourceConfig.getConnection();
-            PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_ID);
+            PreparedStatement statement = connection.prepareStatement(ASSIGN);
             statement.setLong(1, taskId);
             statement.setLong(2, userId);
             statement.executeUpdate();
@@ -119,11 +118,8 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
     }
 
-    /*
-        private final String CREATE = """
-                INSERT INTO tasks (title, description, expiration_date, status)
-                VALUES (?,?,?,?)""";
-     */
+
+
     @Override
     public void create(Task task) {
         try {
