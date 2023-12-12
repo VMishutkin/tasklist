@@ -1,5 +1,6 @@
 package mish.vlad.tasklist.web.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import mish.vlad.tasklist.model.task.Task;
 import mish.vlad.tasklist.service.TaskService;
@@ -7,25 +8,28 @@ import mish.vlad.tasklist.web.dto.task.TaskDto;
 import mish.vlad.tasklist.web.dto.validation.OnUpdate;
 import mish.vlad.tasklist.web.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
 @RequiredArgsConstructor
-
+@Tag(name= "Task controller", description = "Task API")
 public class TaskController {
     @Autowired
     private final TaskService taskService;
     @Autowired
     private final TaskMapper taskMapper;
     @GetMapping("/{id}")
+    @PreAuthorize("canAccessTask(#id)")
     public TaskDto getById(@PathVariable Long id){
         Task task = taskService.getById(id);
 
         return taskMapper.toDto(task);
     }
     @PutMapping
+    @PreAuthorize("canAccessTask(#dto.id)")
     public TaskDto update(@Validated(OnUpdate.class) @RequestBody TaskDto dto){
         Task task = taskMapper.toEntity(dto);
         Task updatedTask = taskService.update(task);
@@ -33,6 +37,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("canAccessTask(#id)")
     public void deleteById(@PathVariable Long id){
         taskService.delete(id);
     }

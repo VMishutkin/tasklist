@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+    container_name: tasklist
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/tasklist
+      - SPRING_DATASOURCE_USERNAME=user1
+      - SPRING_DATASOURCE_PASSWORD=1qaz2wsx
+  db:
+    image: postgres:16.0-alpine
+    container_name: postgres
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=1qaz2wsx
+    - POSTGRES_DB=tasklist
+    volumes:
+      - ./src/main/resources/db-init:/docker-entrypoint-initdb.d

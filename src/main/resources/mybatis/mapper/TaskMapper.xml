@@ -34,7 +34,6 @@
         VALUES (#{title}, #{description}, #{expirationDate}, #{status});
     </insert>
     <update id="update">
-
         UPDATE tasks
         set title = #{title},
         description =#{description},
@@ -46,7 +45,7 @@
         INSERT INTO users_tasks (task_id, user_id)
         VALUES #{taskid}, #{userid}
     </insert>
-    <delete id="update">
+    <delete id="delete">
         DELETE from tasks
         where id = #{id}
     </delete>
