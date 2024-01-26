@@ -1,16 +1,17 @@
-package mish.vlad.tasklist.web.dto.task;
+package mish.vlad.tasklist.model.task;
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import mish.vlad.tasklist.model.task.Status;
+import mish.vlad.tasklist.web.dto.task.TaskDto;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 @Data
-@Getter
-public class TaskDto {
+@AllArgsConstructor
+public class TaskWithUserDto extends TaskDto {
     // @NotNull(message = "id must be not null.", groups = OnUpdate.class)
     private Long id;
     //@NotNull(message = "Title must be not null.", groups = {OnUpdate.class, OnCreate.class})
@@ -25,4 +26,5 @@ public class TaskDto {
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime modifiedTime;
+    private String Username;
 }

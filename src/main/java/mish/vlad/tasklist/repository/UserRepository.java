@@ -1,21 +1,27 @@
 package mish.vlad.tasklist.repository;
 
-import mish.vlad.tasklist.model.user.Role;
+
 import mish.vlad.tasklist.model.user.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Mapper
-public interface UserRepository {
-    Optional<User> findById(Long Id);
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
     Optional<User> findByUsername(String username);
 
-    void update(User user);
-    void create(User user);
-    void insertUserRole(@Param("userid") Long userId, @Param("role") Role role);
-    boolean isTaskOwner(@Param("userid") Long userId, @Param("taskid") Long taskId);
+    @Query(value = """
+             SELECT exists(
+                           SELECT 1
+                           FROM users_tasks
+                           WHERE user_id = :userId
+                             AND task_id = :taskId)
+            """, nativeQuery = true)
+    boolean isTaskOwner(@Param("userId") Long userId,
+                        @Param("taskId") Long taskId);
 
-    void delete(Long id);
 }

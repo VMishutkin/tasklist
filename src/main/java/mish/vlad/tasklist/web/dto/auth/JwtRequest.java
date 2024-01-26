@@ -9,4 +9,12 @@ public class JwtRequest {
     private String username;
     @NotNull(message = "Password must be not null.")
     private String password;
+
+    @Override
+    public String toString() {
+        return "JwtRequest{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

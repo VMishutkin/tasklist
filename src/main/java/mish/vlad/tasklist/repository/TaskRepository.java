@@ -1,22 +1,30 @@
 package mish.vlad.tasklist.repository;
 
 import mish.vlad.tasklist.model.task.Task;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
-@Mapper
-public interface TaskRepository {
-    Optional<Task> findById(Long id);
-    List<Task> findAllByUserId(Long userId);
+@Repository
+public interface TaskRepository extends JpaRepository<Task, Long>, TaskCustomRepo{
 
-    void assignToUsesrById(@Param("taskid") Long taskId, @Param("userid") Long userId);
 
-    void update(Task task);
-    void create(Task task);
+    @Query(value = """
+            SELECT * FROM tasks t
+            WHERE user_id = :userId
+            """, nativeQuery = true)
+    List<Task> findAllByUserId(@Param("userId") Long userId);
 
-    void delete(Long id);
+
+/*    @Modifying
+    @Query(value = """
+            INSERT INTO users_tasks (user_id, task_id)
+            VALUES (:userId, :taskId)
+            """, nativeQuery = true)
+    void assignTask(@Param("userId") Long userId, @Param("taskId") Long taskId);*/
+
 
 }

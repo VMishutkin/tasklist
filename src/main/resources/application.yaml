@@ -4,17 +4,19 @@ spring:
     username: user1
     password: 1qaz2wsx
     driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
   sql:
     init:
       mode: never
       continue-on-error: false
       #data-locations: classpath:demo_data.sql
-  liquibase:
-    changelog: classpath:liquibase/db.changelog.yaml
-    enabled: true
-    default-schema: tasklist
-mybatis:
-  mapper-locations: classpath:mybatis/mapper/*.xml
+  #liquibase:
+    #changelog: classpath:liquibase/db.changelog.yaml
+    #enabled: true
+    #default-schema: tasklist
+
 
 security:
   jwt:

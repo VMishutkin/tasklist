@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User getByUsername(String username) {
+        //User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         return
                 userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("Task not found"));
     }
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.update(user);
+        userRepository.save(user);
         return user;
     }
 
@@ -49,10 +50,11 @@ public class UserServiceImpl implements UserService {
             throw new IllegalStateException("Password and password confirmation do not match");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.create(user);
+
         Set<Role> roles = Set.of(Role.ROLE_USER);
-        userRepository.insertUserRole(user.getId(), Role.ROLE_USER);
         user.setRoles(roles);
+        userRepository.save(user);
+
         return user;
     }
 
@@ -65,6 +67,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void delete(Long id) {
-    userRepository.delete(id);
+    userRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isUserAdmin(Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        boolean isAdmin = user.getRoles().contains(Role.ROLE_ADMIN);
+        return isAdmin;
     }
 }

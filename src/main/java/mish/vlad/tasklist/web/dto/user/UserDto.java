@@ -40,4 +40,14 @@ public class UserDto {
             groups = {OnCreate.class})
     private String passwordConfirmation;
 
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordConfirmation='" + passwordConfirmation + '\'' +
+                '}';
+    }
 }
