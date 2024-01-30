@@ -2,6 +2,8 @@ package mish.vlad.tasklist.service;
 
 import mish.vlad.tasklist.model.user.User;
 
+import java.util.List;
+
 public interface UserService {
     User getById(Long id);
     User getByUsername(String username);
@@ -12,4 +14,7 @@ public interface UserService {
     void delete(Long id);
 
     boolean isUserAdmin(Long id);
+
+
+    List<String> getAllUsernames();
 }

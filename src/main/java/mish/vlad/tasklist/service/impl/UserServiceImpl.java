@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -75,5 +76,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElseThrow();
         boolean isAdmin = user.getRoles().contains(Role.ROLE_ADMIN);
         return isAdmin;
+    }
+
+    @Override
+    public List<String> getAllUsernames() {
+        List<User> users = userRepository.findAll();
+        List<String> usernames = users.stream().map(User::getUsername).toList();
+        return usernames;
     }
 }

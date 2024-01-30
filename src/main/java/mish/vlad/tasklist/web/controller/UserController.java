@@ -48,6 +48,11 @@ public class UserController {
         UserDto userDto = userMapper.toDto(user);
         return userDto;
     }
+    @GetMapping("/")
+    //@PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
+    public List<String> getAllUsers() {
+        return userService.getAllUsernames();
+    }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
@@ -60,12 +65,6 @@ public class UserController {
     public List<? extends TaskDto> getTasksByUserId(@PathVariable Long id) {
         List<? extends TaskDto> tasks = taskService.getAllByUserId(id);
         return tasks;
-    }
-    @GetMapping("/{id}/admin")
-    //@PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
-    public Boolean isAdmin(@PathVariable Long id){
-        boolean isAdmin = userService.isUserAdmin(id);
-        return isAdmin;
     }
 
     @PostMapping("/{id}/tasks")
